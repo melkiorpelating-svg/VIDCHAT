@@ -23,26 +23,26 @@
         .main { max-width: 1200px; margin: 0 auto; padding: 1.5rem; display: grid; grid-template-columns: 1fr 320px; gap: 1.5rem; }
         @media (max-width: 900px) { .main { grid-template-columns: 1fr; } }
         .video-section { display: flex; flex-direction: column; gap: 1rem; }
-        .video-container { position: relative; background: #000; border-radius: 16px; overflow: hidden; aspect-ratio: 16/9; box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
+        .video-container { position: relative; background: #000; border-radius: 16px; overflow: hidden; aspect-ratio: 16/9; box-shadow: 0 10px 40px rgba(0,0,0,0.4); min-height: 300px; }
         video { width: 100%; height: 100%; object-fit: cover; background: #111; }
-        .video-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--muted); }
+        .video-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--muted); padding: 2rem; text-align: center; }
         .video-placeholder svg { width: 80px; height: 80px; margin-bottom: 1rem; opacity: 0.4; }
-        .self-video { position: absolute; bottom: 1rem; right: 1rem; width: 180px; height: 120px; border-radius: 12px; border: 3px solid white; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.3); background: #222; }
+        .self-video { position: absolute; bottom: 1rem; right: 1rem; width: 160px; height: 100px; border-radius: 12px; border: 3px solid white; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.3); background: #222; }
         .status-indicator { position: absolute; top: 1rem; left: 1rem; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; background: rgba(0,0,0,0.5); display: flex; align-items: center; gap: 0.5rem; }
         .status-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); }
         .status-dot.online { background: var(--success); }
         .user-info { position: absolute; bottom: 1rem; left: 1rem; padding: 0.5rem 1rem; background: rgba(0,0,0,0.6); border-radius: 8px; font-size: 0.9rem; }
-        .controls { display: flex; justify-content: center; align-items: center; gap: 1rem; padding: 1rem; background: var(--bg-card); border-radius: 16px; }
-        .ctrl-btn { width: 60px; height: 60px; border-radius: 50%; border: none; font-size: 1.4rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+        .controls { display: flex; justify-content: center; align-items: center; gap: 1rem; padding: 1rem; background: var(--bg-card); border-radius: 16px; flex-wrap: wrap; }
+        .ctrl-btn { width: 56px; height: 56px; border-radius: 50%; border: none; font-size: 1.3rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
         .ctrl-btn:hover { transform: scale(1.1); }
-        .btn-next { background: var(--primary); color: white; width: 100px; border-radius: 30px; font-size: 1rem; font-weight: 700; }
+        .btn-next { background: var(--primary); color: white; width: auto; padding: 0 2rem; border-radius: 30px; font-size: 1rem; font-weight: 700; height: 56px; }
         .btn-stop { background: var(--danger); color: white; }
         .btn-mute, .btn-cam { background: var(--bg-panel); color: white; }
         .btn-next:hover { background: #4f46e5; }
         .btn-stop:hover { background: #dc2626; }
-        .chat-section { display: flex; flex-direction: column; background: var(--bg-card); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.2); height: calc(100vh - 120px); min-height: 500px; }
+        .chat-section { display: flex; flex-direction: column; background: var(--bg-card); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.2); height: 500px; }
         .chat-header { padding: 1rem; background: var(--bg-panel); font-weight: 700; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .chat-messages { flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem; }
+        .chat-messages { flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem; min-height: 350px; }
         .msg { padding: 0.75rem 1rem; border-radius: 16px; max-width: 85%; line-height: 1.4; font-size: 0.95rem; }
         .msg.other { background: var(--bg-panel); border-top-left-radius: 4px; align-self: flex-start; }
         .msg.self { background: var(--primary); border-top-right-radius: 4px; align-self: flex-end; }
@@ -51,6 +51,7 @@
         .chat-input { flex: 1; padding: 0.85rem 1rem; border-radius: 25px; border: none; background: var(--bg-panel); color: white; font-size: 0.95rem; outline: none; }
         .send-btn { width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--primary); color: white; font-size: 1.1rem; cursor: pointer; }
         .info-box { margin-top: 1rem; padding: 1rem; background: rgba(99,102,241,0.1); border-left: 4px solid var(--primary); border-radius: 8px; font-size: 0.9rem; color: #c7d2fe; }
+        .error-box { margin-top: 1rem; padding: 1rem; background: rgba(239,68,68,0.1); border-left: 4px solid var(--danger); border-radius: 8px; font-size: 0.9rem; color: #fca5a5; display: none; }
     </style>
 </head>
 <body>
@@ -91,15 +92,18 @@
         </div>
 
         <div class="controls">
-            <button class="ctrl-btn btn-mute" id="muteBtn">🔊</button>
-            <button class="ctrl-btn btn-cam" id="camBtn">📷</button>
+            <button class="ctrl-btn btn-mute" id="muteBtn" title="Bisu/Suara">🔊</button>
+            <button class="ctrl-btn btn-cam" id="camBtn" title="Kamera On/Off">📷</button>
             <button class="ctrl-btn btn-next" id="startBtn">▶️ MULAI</button>
-            <button class="ctrl-btn btn-stop" id="stopBtn" style="display:none;">⏹</button>
-            <button class="ctrl-btn btn-mute" id="nextBtn">⏭️</button>
+            <button class="ctrl-btn btn-stop" id="stopBtn" style="display:none;" title="Berhenti">⏹</button>
+            <button class="ctrl-btn btn-mute" id="nextBtn" title="Orang Berikutnya">⏭️</button>
         </div>
 
         <div class="info-box">
             <strong>💡 Panduan:</strong> Tekan ▶️ Mulai untuk terhubung dengan orang baru. Tekan ⏭️ Lewati kapan saja. Harap bersikap sopan dan hormat kepada sesama pengguna.
+        </div>
+        <div class="error-box" id="errorBox">
+            <strong>⚠️ Peringatan:</strong> <span id="errorText">Tidak dapat mengakses kamera/mikrofon. Pastikan izin diberikan di pengaturan browser.</span>
         </div>
     </div>
 
@@ -120,87 +124,147 @@
 
 <script>
 let isConnected = false, isMuted = false, isCamOn = true, localStream = null;
-const startBtn = document.getElementById('startBtn'), stopBtn = document.getElementById('stopBtn');
-const nextBtn = document.getElementById('nextBtn'), muteBtn = document.getElementById('muteBtn');
-const camBtn = document.getElementById('camBtn'), selfVideo = document.getElementById('selfVideo');
-const remoteVideo = document.getElementById('remoteVideo'), videoPlaceholder = document.getElementById('videoPlaceholder');
-const statusDot = document.getElementById('statusDot'), statusText = document.getElementById('statusText');
-const userInfo = document.getElementById('userInfo'), chatInput = document.getElementById('chatInput');
-const sendBtn = document.getElementById('sendBtn'), chatMessages = document.getElementById('chatMessages');
+
+const startBtn = document.getElementById('startBtn');
+const stopBtn = document.getElementById('stopBtn');
+const nextBtn = document.getElementById('nextBtn');
+const muteBtn = document.getElementById('muteBtn');
+const camBtn = document.getElementById('camBtn');
+const selfVideo = document.getElementById('selfVideo');
+const videoPlaceholder = document.getElementById('videoPlaceholder');
+const statusDot = document.getElementById('statusDot');
+const statusText = document.getElementById('statusText');
+const userInfo = document.getElementById('userInfo');
+const chatInput = document.getElementById('chatInput');
+const sendBtn = document.getElementById('sendBtn');
+const chatMessages = document.getElementById('chatMessages');
+const errorBox = document.getElementById('errorBox');
+const errorText = document.getElementById('errorText');
 
 const countries = ['🇮🇩 Indonesia', '🇲🇾 Malaysia', '🇸🇬 Singapura', '🇺🇸 Amerika', '🇯🇵 Jepang', '🇰🇷 Korea', '🇹🇭 Thailand', '🇻🇳 Vietnam'];
 const names = ['Budi', 'Siti', 'Ahmad', 'Li Na', 'John', 'Yuki', 'Minji', 'Kamal', 'Sari', 'Rian'];
 
+function showError(msg) {
+    errorText.textContent = msg;
+    errorBox.style.display = 'block';
+    setTimeout(() => errorBox.style.display = 'none', 5000);
+}
+
 startBtn.addEventListener('click', async () => {
     try {
-        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        errorBox.style.display = 'none';
+        localStream = await navigator.mediaDevices.getUserMedia({ 
+            video: { width: 320, height: 240 }, 
+            audio: true 
+        });
         selfVideo.srcObject = localStream;
-        selfVideo.style.display = 'block'; remoteVideo.style.display = 'block'; videoPlaceholder.style.display = 'none';
-        startBtn.style.display = 'none'; stopBtn.style.display = 'flex'; isConnected = true;
-        statusDot.classList.add('online'); statusText.textContent = 'Terhubung...';
-        chatInput.disabled = false; sendBtn.disabled = false;
+        selfVideo.style.display = 'block';
+        videoPlaceholder.style.display = 'none';
+        startBtn.style.display = 'none';
+        stopBtn.style.display = 'flex';
+        isConnected = true;
+        statusDot.classList.add('online');
+        statusText.textContent = 'Terhubung...';
+        chatInput.disabled = false;
+        sendBtn.disabled = false;
         setTimeout(() => connectToNewPerson(), 1500);
-    } catch (err) { alert('⚠️ Harus izinkan Kamera & Mikrofon!'); }
+    } catch (err) {
+        console.error('Kesalahan akses media:', err);
+        if (err.name === 'NotAllowedError') {
+            showError('Izin kamera/mikrofon ditolak. Harap izinkan di pengaturan browser.');
+        } else if (err.name === 'NotFoundError') {
+            showError('Kamera atau mikrofon tidak ditemukan di perangkat.');
+        } else {
+            showError('Tidak dapat mengakses kamera/mikrofon: ' + err.message);
+        }
+    }
 });
 
 function connectToNewPerson() {
     const country = countries[Math.floor(Math.random() * countries.length)];
     const name = names[Math.floor(Math.random() * names.length)] + '#' + Math.floor(Math.random() * 9999);
-    statusText.textContent = 'Terhubung!'; userInfo.style.display = 'block';
+    statusText.textContent = 'Terhubung!';
+    userInfo.style.display = 'block';
     document.getElementById('userCountry').textContent = country;
     document.getElementById('userName').textContent = name;
     addMessage(`✅ Terhubung dengan ${name} dari ${country}`, 'notice');
     setTimeout(() => {
-        const replies = ['Halo! 👋', 'Hai, apa kabar?', 'Selamat datang! 😊'];
+        const replies = ['Halo! 👋', 'Hai, apa kabar?', 'Selamat datang! 😊', 'Halo, senang bertemu denganmu!'];
         addMessage(replies[Math.floor(Math.random() * replies.length)], 'other');
     }, 2000);
 }
 
 stopBtn.addEventListener('click', () => {
-    if (localStream) localStream.getTracks().forEach(t => t.stop());
-    selfVideo.style.display = 'none'; remoteVideo.style.display = 'none'; videoPlaceholder.style.display = 'flex';
-    userInfo.style.display = 'none'; startBtn.style.display = 'flex'; stopBtn.style.display = 'none';
-    isConnected = false; statusDot.classList.remove('online'); statusText.textContent = 'Belum Terhubung';
-    chatInput.disabled = true; sendBtn.disabled = true;
+    if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+        localStream = null;
+    }
+    selfVideo.srcObject = null;
+    selfVideo.style.display = 'none';
+    videoPlaceholder.style.display = 'flex';
+    userInfo.style.display = 'none';
+    startBtn.style.display = 'flex';
+    stopBtn.style.display = 'none';
+    isConnected = false;
+    statusDot.classList.remove('online');
+    statusText.textContent = 'Belum Terhubung';
+    chatInput.disabled = true;
+    sendBtn.disabled = true;
+    chatInput.value = '';
     addMessage('❌ Koneksi diputus', 'notice');
 });
 
 nextBtn.addEventListener('click', () => {
     if (!isConnected) return;
-    addMessage('⏭️ Mencari orang baru...', 'notice'); userInfo.style.display = 'none';
-    statusText.textContent = 'Mencari...'; setTimeout(() => connectToNewPerson(), 1500);
+    addMessage('⏭️ Mencari orang baru...', 'notice');
+    userInfo.style.display = 'none';
+    statusText.textContent = 'Mencari...';
+    setTimeout(() => connectToNewPerson(), 1500);
 });
 
 muteBtn.addEventListener('click', () => {
-    if (!localStream) return; isMuted = !isMuted;
-    localStream.getAudioTracks()[0].enabled = !isMuted;
-    muteBtn.textContent = isMuted ? '🔇' : '🔊';
+    if (!localStream) return;
+    const audioTrack = localStream.getAudioTracks()[0];
+    if (audioTrack) {
+        isMuted = !isMuted;
+        audioTrack.enabled = !isMuted;
+        muteBtn.textContent = isMuted ? '🔇' : '🔊';
+    }
 });
 
 camBtn.addEventListener('click', () => {
-    if (!localStream) return; isCamOn = !isCamOn;
-    localStream.getVideoTracks()[0].enabled = isCamOn;
-    camBtn.textContent = isCamOn ? '📷' : '📷❌';
+    if (!localStream) return;
+    const videoTrack = localStream.getVideoTracks()[0];
+    if (videoTrack) {
+        isCamOn = !isCamOn;
+        videoTrack.enabled = isCamOn;
+        camBtn.textContent = isCamOn ? '📷' : '📷❌';
+    }
 });
 
 function addMessage(text, type) {
     const div = document.createElement('div');
-    div.className = `msg ${type}`; div.textContent = text;
-    chatMessages.appendChild(div); chatMessages.scrollTop = chatMessages.scrollHeight;
+    div.className = `msg ${type}`;
+    div.textContent = text;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
 function sendChatMessage() {
     const text = chatInput.value.trim();
     if (!text || !isConnected) return;
-    addMessage(text, 'self'); chatInput.value = '';
+    addMessage(text, 'self');
+    chatInput.value = '';
     setTimeout(() => {
-        const replies = ['Iya! 😊', 'Benar sekali!', 'Wah, keren!', 'Seru ya!'];
+        const replies = ['Iya! 😊', 'Benar sekali!', 'Wah, keren!', 'Seru ya!', 'Hahaha 😂', 'Oke deh! 👋'];
         addMessage(replies[Math.floor(Math.random() * replies.length)], 'other');
     }, 1000 + Math.random() * 2000);
 }
 
 sendBtn.addEventListener('click', sendChatMessage);
-chatInput.addEventListener('keydown', e => e.key === 'Enter' && sendChatMessage());
+chatInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') sendChatMessage();
+});
 
 setInterval(() => {
     const count = Math.floor(1000 + Math.random() * 5000);
